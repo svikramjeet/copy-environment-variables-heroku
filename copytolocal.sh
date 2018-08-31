@@ -7,7 +7,7 @@
 # 3. Run "heroku apps" to quickly see the names of your apps
 # 4. Add this script file to the Desktop, "cd" into Desktop,
 #    run "bash ./copytolocal.sh source-app-name file-name-to-create"
-#    eg bash ./copytolocal.sh uat .env
+#    eg bash ./copytolocal.sh production-toyota .env
 # 5. Enjoy new Config Vars!
 
 set -e
