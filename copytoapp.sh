@@ -11,12 +11,13 @@
 #    run "bash ./copytoapp.sh source-app-name target-app-name"
 # 2. Enjoy new Config Vars!
 # (Note: if same key exists in new Heroku project, it will be overwritten)
+# (if there is space between value eg NAME=DAVE SMITH, script will throw format error)
 
 set -e
 
 sourceApp="$1"
 targetApp="$2"
-# ignoredKeys=(IGNORE_THIS_KEY ALSO_IGNORE_THIS_KEY ADD_IGNORED_KEYS_HERE)
+# ignoredKeys=(DATABASE_URL)
 config=""
 
 while read key value; do
