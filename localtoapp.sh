@@ -10,24 +10,21 @@
 # 1. Add this script file to the Desktop, "cd" into Desktop,
 #    run "bash ./localtoapp.sh source-file-path target-app-name"
 # 2. Enjoy new Config Vars!
-# (Note: if same key exists in new Heroku project, it will be overwritten)
+# (Note: if same key exists in new Heroku project, it will be overwritten. To avoid this give env variable keys comma separated in ignoredKeys)
 
 set -e
 
-sourceApp="$1"
+filePath="$1"
 targetApp="$2"
-# ignoredKeys=(IGNORE_THIS_KEY ALSO_IGNORE_THIS_KEY ADD_IGNORED_KEYS_HERE)
+#ignoredKeys=(DATABASE_URL, ROLLBAR_ACCESS_TOKEN, ROLLBAR_ENDPOINT, APP_DEBUG)
 config=""
 
-while read key value; do
-  key=${key%%:}
-
-  if [[ ${ignoredKeys[*]} =~ $key ]];
+while read key_value; do
+  if [[ ${ignoredKeys[*]} =~ ${key_value%%=*} ]];
     then
-      echo "Ignoring $key=$value"
+      echo "Ignoring ${key_value%%=*}"
     else
-      config="$config $key=$value"
+      config="$config $key_value"
   fi
 done < <(cat $filePath)
-
 eval "heroku config:set $config --app $targetApp"
