@@ -16,7 +16,7 @@ set -e
 
 filePath="$1"
 targetApp="$2"
-#ignoredKeys=(DATABASE_URL, ROLLBAR_ACCESS_TOKEN, ROLLBAR_ENDPOINT, APP_DEBUG)
+#ignoredKeys=(DATABASE_URL, APP_ENV)
 config=""
 
 while read key_value; do
