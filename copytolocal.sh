@@ -15,12 +15,14 @@ set -e
 sourceApp="$1"
 fileName="$2"
 
-touch $fileName
-FILE=$fileName
+# Initialize the file and write a start marker
+echo "#start" > "$fileName"
 
-echo "#start" >> $fileName
+# Fetch Heroku config variables and write them to the file
+heroku config --app "$sourceApp" | sed "s/://g" | while read -r line; do
+    key=$(echo "$line" | awk -F= '{print $1}')
+    echo "$key" >> "$fileName"
+done
 
-while read key value; do
-   echo "$key='$value'" >> $FILE
-done < <(heroku config --app "$sourceApp" | sed "s/://")
-echo "#end" >> $fileName
+# Write an end marker to the file
+echo "#end" >> "$fileName"
